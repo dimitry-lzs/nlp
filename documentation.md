@@ -1,5 +1,5 @@
 # Natural Language Processing
-## Assignment 2025 
+## Assignment 2025
 
 ---
 
@@ -38,7 +38,7 @@ An NLP pipeline is a structured sequence of steps or modules that process raw te
 
 ## Part 1
 
-### **Question 1A - Custom NLP Pipeline** 
+### **Question 1A - Custom NLP Pipeline**
 > *"Reconstruction of 2 sentences from our choice, 1 from each text, with the use of a custom pipeline"*
 
 For this question, **Stanza** was selected to create a custom NLP pipeline that performs custom phrase substitutions and grammar modifications to sentences. The goal was to reconstruct 2 sentences of our choosing from the provided texts and thus to gain a better grasp of Stanza as a tool and familiarize ourselves with it.
@@ -58,23 +58,23 @@ For this question, **Stanza** was selected to create a custom NLP pipeline that 
 #### The following play a crucial role for the grammar-based modifications which are mentioned later on:
 
 1. **Head** - Represents the index of the head word in the dependency tree
-   
+
    Dependency parsing identifies relationships between words in a sentence, each word (except the root) is "governed" by another word, called its "head". The head is essentially an index pointing to the head word of a sentence. If `word.head == 0`, it means the word is the root of the dependency tree (it has no governing word). For example, in the sentence *"I love programming"*, "love" is the root because it is the main action and governs the other words.
 
 2. **Lemma** - Base or dictionary form of a word
-   
+
    Lemmatization reduces a word to its canonical form, for example for the word "running", the lemma is "run".
 
 3. **Deprel** - Describes the dependency relation between a word and its head
-   
+
    For example, "obj" means object, "nsubj" means nominal subject and "root" means root of the sentence.
 
 4. **UPOS** - Universal Part-of-Speech tags
-   
+
    These are the standardized tags used across different languages to represent the grammatical category of words like noun, verb, adjective.
 
 5. **Head_lemma** - The lemma of the head word
-   
+
    For this question, this is used to ensure that the word we are replacing is governed by a specific head word in the sentence, since want to substitute it specifically, in a specific context.
 
 6. **Replacement** - Used to specify what the replacement of a token will be.
@@ -85,7 +85,7 @@ The main challenge posed, was to figure out how the grammar-based substitutions 
 
 #### Methodology
 
-##### Using Stanza for POS Tagging 
+##### Using Stanza for POS Tagging
 We utilized the POS Tagging feature of Stanza to analyze the grammatical structure of the sentences. This helped greatly in understanding the part-of-speech of each word in the context of its sentence, which was crucial to make the grammar-based substitutions we implemented.
 
 ##### Using Pandas for POS Tags Visualization
@@ -102,37 +102,59 @@ As mentioned in the beginning, this custom NLP pipeline demonstrates how we used
 
 ---
 
-### **Question 1B**
+### **Question 1B - Paraphrasing with Transformers**
 > *"Reconstruction of the entire 2 texts using 3 different automatic Python library pipelines."*
+
+For this question, we implemented three state-of-the-art transformer-based models for paraphrasing to reconstruct the entire texts. Each model was accessed via the Hugging Face transformers library to systematically alter and improve the original strings.
 
 #### Tools used:
 
-> *[To be filled in]*
+- **Hugging Face Transformers** - For accessing pre-trained transformer models
+- **PyTorch** - For tensor manipulation and device management
+- **spaCy** (en_core_web_sm) - For sentence tokenization and text preprocessing
+- **CUDA/CPU** - Hardware acceleration with dynamic device selection
+
+#### Models Implemented:
+
+1. **Pegasus T5 model**: `tuner007/pegasus_paraphrase`
+2. **BART model**: `facebook/bart-base`
+3. **T5 model**: `t5-base`
 
 #### Challenges:
 
-> *[To be filled in]*
+The primary challenge was achieving effective paraphrasing that preserves semantic meaning while improving grammatical structure and fluency. Initial attempts showed that single-pass paraphrasing often resulted in limited improvements. Additionally, balancing the trade-off between semantic preservation and grammatical enhancement required careful parameter tuning and iterative refinement approaches.
 
 #### Methodology:
-A complete reconstruction of two texts was implemented using 3 different pipelines, utilizing...
 
----
+##### Sentence-Level Processing Approach
+We utilized spaCy's sentence splitting capabilities to tokenize the original texts into individual sentences. This granular approach allowed each sentence to be processed independently, ensuring more focused and accurate paraphrasing.
+
+##### Hardware Optimization
+The implementation dynamically selects CUDA if available, falling back to CPU otherwise, ensuring optimal performance across different hardware configurations.
+
+##### Iterative Paraphrasing Strategy
+Through extensive experimentation, we discovered that the most effective paraphrasing is achieved by implementing an iterative refinement process:
+
+1. **Individual Sentence Processing**: Each sentence is processed independently to maintain context integrity
+2. **Model Input**: Each sentence is fed to the selected paraphrasing model
+3. **Recursive Refinement**: The paraphrased output is recursively fed back into the model for multiple iterations (typically 2-10 iterations)
+4. **Output Generation**: Final paraphrased sentences are concatenated to reconstruct the complete text
+
+This iterative approach led to paraphrased texts that preserved or even enhanced the semantic meaning of the original input while significantly improving grammatical structure and fluency.
+
 
 ### **Question 1C**
 > *"Compare the results of each approach using appropriate techniques."*
 
-#### Tools used:
+##### Model Comparison Results
+Among the three transformer models tested, `tuner007/pegasus_paraphrase` consistently yielded the best results in terms of:
+- **Fluency**: Natural language flow and readability
+- **Coherence**: Logical sentence structure and connectivity
+- **Semantic Preservation**: Maintaining the original meaning while improving expression
 
-> *[To be filled in]*
+However, a key observation from our experiments was that using these transformer models unfortunately did not achieve significant semantic improvements for the given texts. Extensive parameter tuning, including adjustments to temperature, beam search parameters, and iteration counts, did not substantially enhance the results.
 
-#### Challenges:
-
-> *[To be filled in]*
-
-#### Methodology:
-Quality and quantity comparison of the above techniques was conducted...
-
----
+The models performed particularly poorly when attempting to process texts in their entirety rather than sentence-by-sentence, with some configurations failing to work at all. This highlights that paraphrasing complex, grammatically challenging texts to achieve meaningful semantic improvements remains a significant challenge in current NLP approaches, despite the sophistication of transformer-based models.
 
 ## Part 2 - Word Embeddings Analysis
 
@@ -302,15 +324,15 @@ This model blends token filtering (e.g. stopword removal) with GloVe vectors, ma
 ## Υποδείξεις *(5/19/2025)*
 
 > **Σημαντικές Παρατηρήσεις:**
-> 
+>
 > - Όλο το documentation μπορεί να είναι στα αγγλικά
-> 
+>
 > ### **1A.** Κυριολεκτικά ότι θέλουμε από το lab1
-> 
+>
 > ### **1B.** Ένα ακόμα μοντέλο + περισσότερο experimentation με παραμέτρους
-> 
+>
 > ### **1C.** Απλός σχολιασμός - κάτι πιο υποκειμενικό
-> 
+>
 > ### **Παραδοτέο 2**
 > - **ChatGPT** - παραγωγή ενός σωστού κειμένου "ground truth" για σύγκριση με τα παραγώμενα κείμενα από άλλα μοντέλα
 > - **Visualization** - Πιο αντικειμενικός σχολιασμός
