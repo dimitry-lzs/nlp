@@ -160,7 +160,7 @@ The models performed particularly poorly when attempting to process texts in the
 
 > *"Use your own word embeddings (Word2Vec, GloVe, FastText, BERT embeddings, etc.) and your own custom automatic NLP pipelines (preprocessing, vocabulary, word embeddings, semantic trees etc.) to analyze the word similarity before and after the reconstruction. Calculate the cosine similarity between the original and reconstructed versions. Compare the methods with respect to A, B of deliverable 1. Visualize the word embeddings for A,B using PCA/t-SNE to demonstrate the shifts in the semantic space."*
 
-The goal of this part of the project is to evaluate the semantic similarity between original and reconstructed texts (produced by various NLP models such as Pegasus, BART, T5, and ChatGPT) using different word embedding techniques and a custom NLP pipeline. The task involves comparing the semantic shifts before and after text reconstruction using cosine similarity and visualizing these embeddings in a reduced dimensional space (PCA).
+The goal of this part of the project is to evaluate the semantic similarity between original and reconstructed texts (produced by various NLP models such as Pegasus, BART, T5 ) using different word embedding techniques and a custom NLP pipeline. We also added a reconstructed version of the original text with the help of ChatGPT 4o as the grand truth and best paraphrasing to compare with the others. The task involves comparing the semantic shifts before and after text reconstruction using cosine similarity and visualizing these embeddings in a reduced dimensional space (PCA).
 
 ### Word Embeddings Analysis
 
@@ -245,17 +245,17 @@ At the end of the analysis, we use pandas to generate a table with all cosine si
 
 Our end results looked like this:
 
-| Model   | Cosine BERT | Cosine GloVe | Cosine Custom |
-|---------|-------------|--------------|---------------|
-| Pegasus | 0.937536    | 0.997454     | 0.993679      |
-| BART    | 0.977968    | 0.999684     | 0.997300      |
-| T5      | 0.706616    | 0.997601     | 0.990438      |
-| ChatGPT | 0.965841    | 0.998354     | 0.995629      |
+| Model      | Cosine BERT | Cosine GloVe | Cosine Custom |
+|------------|-------------|--------------|---------------|
+| Pegasus    | 0.937536    | 0.997454     | 0.993679      |
+| BART       | 0.977968    | 0.999684     | 0.997300      |
+| T5         | 0.706616    | 0.997601     | 0.990438      |
+| ChatGPT 4o | 0.965841    | 0.998354     | 0.995629      |
 
 **Observations:**
 
 - **BART** achieved the highest similarity across all models, particularly with BERT (0.9780), indicating strong semantic preservation.
-- **ChatGPT** also maintained high fidelity in all embeddings, especially within the GloVe (0.9984) and custom pipelines (0.9956).
+- **ChatGPT 4o** also maintained high fidelity in all embeddings, especially within the GloVe (0.9984) and custom pipelines (0.9956).
 - **Pegasus** performed very well overall, with high similarity in GloVe (0.9975) and custom embeddings (0.9937), suggesting that its reconstructions retain core semantic content. Its slightly lower BERT score (0.9375), however, may indicate subtle contextual differences not reflected in static embeddings.
 - **T5**, despite scoring well in GloVe and custom embeddings, showed a significantly lower BERT similarity (0.7066), suggesting a semantic shift captured only by contextual models.
 - Static embeddings (GloVe and custom) tend to produce uniformly high similarity scores, while BERT introduces more variability due to context sensitivity.
@@ -276,18 +276,73 @@ This model blends token filtering (e.g. stopword removal) with GloVe vectors, ma
 
 ## General Discussion
 
-**Key Questions:**
-- How well did the word embeddings capture the meaning of the original text?
-- Which were the biggest difficulties in reconstruction?
-- How can this process be automated using NLP models?
-- Were there differences in reconstruction quality between techniques, methods, libraries etc?
-- Discuss your findings.
+## Discussion
+
+### How well did the word embeddings capture the meaning of the original text?
+
+The effectiveness of word embeddings in capturing semantic meaning varied significantly across different approaches and models. Our analysis revealed that **contextual embeddings (BERT) demonstrated superior sensitivity** to semantic nuances compared to static embeddings. While GloVe and custom pipeline embeddings consistently produced high similarity scores (>0.99 across most models), BERT embeddings showed more discriminative behavior, revealing meaningful differences between reconstruction approaches.
+
+The **static embeddings (GloVe and custom) may have overfitted to lexical similarity** rather than true semantic preservation. This is evidenced by uniformly high scores that failed to distinguish between varying reconstruction qualities. In contrast, BERT's contextual awareness captured subtle semantic shifts, particularly evident in T5's significantly lower BERT similarity (0.7066) despite high static embedding scores.
+
+### Which were the biggest difficulties in reconstruction?
+
+Several key challenges emerged during the reconstruction process:
+
+**1. Grammar-based substitution complexity**: The primary challenge in our custom Stanza pipeline was implementing context-sensitive modifications. Words appearing multiple times in sentences required precise targeting based on grammatical relationships (head, deprel, UPOS) to ensure appropriate substitutions without unintended alterations.
+
+**2. Cross-model semantic variability**: Different reconstruction models exhibited varying degrees of semantic preservation. T5's poor performance with BERT embeddings (0.7066) suggests fundamental challenges in maintaining contextual coherence during reconstruction, possibly due to its text-to-text transfer approach introducing semantic drift.
+
+**3. Evaluation metric limitations**: The disparity between static and contextual embedding results highlighted the challenge of selecting appropriate evaluation metrics. Static embeddings failed to capture the semantic deterioration that BERT detected in certain reconstructions.
+
+**4. Pipeline optimization**: Balancing preprocessing steps (stopword removal, tokenization, POS tagging) in custom pipelines required careful consideration to maintain semantic fidelity while enabling meaningful analysis.
+
+### How can this process be automated using NLP models?
+
+Several automation strategies emerged from our analysis:
+
+**1. Hybrid embedding evaluation**: Implementing automated systems that combine multiple embedding approaches (contextual + static) can provide more robust semantic similarity assessment. The divergence between BERT and GloVe scores serves as an automatic quality indicator.
+
+**2. Grammar-aware reconstruction pipelines**: Leveraging dependency parsing and POS tagging (as demonstrated with Stanza) enables automated, context-sensitive text modifications. This approach can be scaled by training models to recognize reconstruction patterns and apply appropriate grammatical rules.
+
+**3. Model ensemble approaches**: Our results suggest that different models excel in different aspects (BART for overall similarity, ChatGPT for consistency). Automated systems could ensemble multiple reconstruction models and select outputs based on embedding similarity scores.
+
+**4. Real-time quality assessment**: Implementing cosine similarity monitoring during reconstruction can enable automatic rejection of semantically degraded outputs, using BERT similarity thresholds as quality gates.
+
+### Were there differences in reconstruction quality between techniques, methods, libraries etc?
+
+Significant qualitative differences emerged across multiple dimensions:
+
+**Model Performance Hierarchy**:
+- **BART**: Demonstrated superior semantic preservation across all embedding types, suggesting robust reconstruction capabilities
+- **ChatGPT 4o**: Showed consistent high-quality performance with excellent semantic fidelity
+- **Pegasus**: Performed well in static embeddings but showed contextual limitations in BERT analysis
+- **T5**: Exhibited the most problematic reconstruction quality, particularly in contextual semantic preservation
+
+**Embedding Method Sensitivity**:
+- **BERT embeddings**: Provided the most discriminative evaluation, revealing quality differences invisible to static methods
+- **GloVe embeddings**: Showed high sensitivity to vocabulary overlap but limited contextual awareness
+- **Custom pipeline**: Offered interpretability advantages but required careful hyperparameter tuning
+
+**Library-specific Insights**:
+- **Stanza**: Excellent for grammatical analysis and context-sensitive modifications, though requiring substantial manual configuration
+- **Sentence-transformers**: Provided robust, out-of-the-box contextual embeddings with minimal setup
+- **Gensim**: Offered reliable static embeddings but lacked contextual sophistication
 
 ---
 
 ## Conclusions
 
-*[Findings and difficulties to be filled in]*
+Our investigation revealed several critical insights:
+
+1. **Embedding complementarity**: The combination of contextual and static embeddings provides more comprehensive semantic evaluation than any single approach.
+
+2. **Model-specific reconstruction patterns**: Each reconstruction model exhibits distinct semantic preservation characteristics, suggesting the need for task-specific model selection.
+
+3. **Evaluation methodology importance**: Traditional similarity metrics may mask semantic degradation, emphasizing the need for multi-faceted evaluation approaches.
+
+4. **Scalability considerations**: While custom pipelines offer granular control, pre-trained models like BART and ChatGPT provide better scalability for production applications.
+
+ In conclusion, effective text reconstruction requires careful consideration of both technical approach and evaluation methodology, with contextual embeddings serving as crucial quality indicators for automated systems.
 
 ---
 
@@ -306,9 +361,6 @@ This model blends token filtering (e.g. stopword removal) with GloVe vectors, ma
 ### **Question 1B**
 > *[To be filled in]*
 
-### **Question 1C**
-> *[To be filled in]*
-
 ### **Part 2**
 - [Word Embeddings](https://www.ibm.com/think/topics/word-embeddings)
 - [Sentence Transformers](https://sbert.net)
@@ -318,24 +370,6 @@ This model blends token filtering (e.g. stopword removal) with GloVe vectors, ma
 - [spaCy](https://spacy.io)
 - [Cosine Similarity](https://www.geeksforgeeks.org/dbms/cosine-similarity/)
 - [TextStat](https://pypi.org/project/textstat/)
-
----
-
-## Υποδείξεις *(5/19/2025)*
-
-> **Σημαντικές Παρατηρήσεις:**
->
-> - Όλο το documentation μπορεί να είναι στα αγγλικά
->
-> ### **1A.** Κυριολεκτικά ότι θέλουμε από το lab1
->
-> ### **1B.** Ένα ακόμα μοντέλο + περισσότερο experimentation με παραμέτρους
->
-> ### **1C.** Απλός σχολιασμός - κάτι πιο υποκειμενικό
->
-> ### **Παραδοτέο 2**
-> - **ChatGPT** - παραγωγή ενός σωστού κειμένου "ground truth" για σύγκριση με τα παραγώμενα κείμενα από άλλα μοντέλα
-> - **Visualization** - Πιο αντικειμενικός σχολιασμός
 
 ---
 
