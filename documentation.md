@@ -368,14 +368,14 @@ Our investigation revealed several critical insights:
 - [Hugging Face Transformers](https://huggingface.co/transformers/)
 
 ### **Part 2**
-- [Word Embeddings](https://www.ibm.com/think/topics/word-embeddings)
-- [Sentence Transformers](https://sbert.net)
-- [Gensim](https://radimrehurek.com/gensim/intro.html)
-- [NLTK](https://www.nltk.org)
-- [NumPy](https://numpy.org)
-- [spaCy](https://spacy.io)
-- [Cosine Similarity](https://www.geeksforgeeks.org/dbms/cosine-similarity/)
-- [TextStat](https://pypi.org/project/textstat/)
+- [Word Embeddings - IBM](https://www.ibm.com/think/topics/word-embeddings)
+- [Sentence Transformers Documentation](https://sbert.net)
+- [Gensim Documentation](https://radimrehurek.com/gensim/intro.html)
+- [NLTK Documentation](https://www.nltk.org)
+- [NumPy Documentation](https://numpy.org)
+- [spaCy Documentation](https://spacy.io)
+- [Cosine Similarity - GeeksforGeeks](https://www.geeksforgeeks.org/dbms/cosine-similarity/)
+- [TextStat Library](https://pypi.org/project/textstat/)
 
 ---
 
