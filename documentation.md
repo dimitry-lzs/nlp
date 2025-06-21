@@ -359,7 +359,13 @@ Our investigation revealed several critical insights:
 - [Stanza - Data Objects](https://stanfordnlp.github.io/stanza/data_objects.html)
 
 ### **Question 1B**
-> *[To be filled in]*
+- [Torch - PyTorch](https://pytorch.org)
+- [spaCy - Sentence Tokenization](https://spacy.io)
+- [spaCy - English pipeline](https://spacy.io/models/en#en_core_web_sm)
+- [Pegasus Paraphrase](https://huggingface.co/tuner007/pegasus_paraphrase)
+- [Facebook Bart](https://huggingface.co/facebook/bart-base)
+- [Google T5 Model](https://huggingface.co/google-t5/t5-large)
+- [Hugging Face Transformers](https://huggingface.co/transformers/)
 
 ### **Part 2**
 - [Word Embeddings](https://www.ibm.com/think/topics/word-embeddings)
