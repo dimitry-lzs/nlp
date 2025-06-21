@@ -16,8 +16,7 @@ This project focuses on text reconstruction using various Natural Language Proce
 
 ```
 ├── documentation.md          # Complete project documentation
-├── question-1.ipynb         # Question 1A - Custom NLP Pipeline with Stanza
-├── question-1A.ipynb        # Additional Question 1A implementation
+├── question-1A.ipynb        # Question 1A - Custom NLP Pipeline with Stanza
 ├── question-1-b.ipynb       # Question 1B - Transformer-based paraphrasing
 ├── part2.ipynb              # Part 2 - Word Embeddings Analysis
 └── readme.md                # This file
@@ -90,7 +89,7 @@ If running locally, ensure you have:
 
 ### Notebook Descriptions
 
-#### 1. question-1.ipynb & question-1A.ipynb
+#### 1. question-1A.ipynb
 **Custom NLP Pipeline with Stanza**
 - Implements custom phrase and grammar-based substitutions
 - Uses Stanza for POS tagging, dependency parsing, and lemmatization
@@ -169,3 +168,7 @@ For detailed methodology, results, and analysis, refer to `documentation.md`.
 - Use Kaggle or Google Colab for GPU access
 - Process texts sentence-by-sentence for better memory management
 - Adjust model parameters (temperature, beam search) based on available resources
+
+---
+
+*✨ Made with love by Team NLP 2025 ✨*
