@@ -21,10 +21,18 @@ In this project, we focus on implementing text reconstruction through various me
 
 Moreover, the comparative evaluation of the reconstruction results is conducted using a range of tools designed to quantify and visualize the improvements. This process is supported by advanced NLP techniques, including morphosyntactic analysis, the identification of grammatical patterns, and the resolution of semantic ambiguities.
 
-### Μεθοδολογία
+### Methodology
 
-**Τι είναι ασάφια;**
-*(εξήγηση και άλλων τέτοιων εννοιών, θα εξηγηθούν σύμφωνα με τις τεχνικές που χρησιμοποιούνται σε κάθε ερώτημα π.χ. cosine similarity)*
+#### Main concepts
+**What is ambiguity?**
+Ambiguity refers to situations where a word, phrase, or sentence has more than one possible interpretation or lacks clarity. In our project, ambiguity is not measured directly, but inferred using tools like cosine similarity, embeddings, and PCA visualizations.
+
+**What is similarity?**
+Similarity in Natural Language Processing refers to how semantically close two pieces of text are. It’s not just about using the same words—it's about expressing the same meaning, even when different wording is used.
+In this project, similarity is measured using cosine similarity and embeddings.
+
+**What is an NLP pipeline?**
+An NLP pipeline is a structured sequence of steps or modules that process raw text and transform it into something that can be analyzed, interpreted, or used in downstream tasks (e.g., classification, summarization, semantic analysis). Each step addresses a specific layer of linguistic understanding, from basic structure to deep semantics.
 
 ---
 
@@ -95,98 +103,175 @@ As mentioned in the beginning, this custom NLP pipeline demonstrates how we used
 ---
 
 ### **Question 1B**
-> *"Ανακατασκευή του συνόλου των 2 κειμένων με χρήση 3 διαφορετικών αυτόματων βιβλιοθηκών python pipelines."*
+> *"Reconstruction of the entire 2 texts using 3 different automatic Python library pipelines."*
 
-#### Εργαλεία που χρησιμοποιήθηκαν:
-
-> *[To be filled in]*
-
-#### Προκλήσεις:
+#### Tools used:
 
 > *[To be filled in]*
 
-#### Περιγραφή Μεθοδολογίας:
-Υλοποιήθηκε πλήρης ανακατασκευή δύο κειμένων με χρήση 3 διαφορετικών pipelines, αξιοποιώντας...
+#### Challenges:
+
+> *[To be filled in]*
+
+#### Methodology:
+A complete reconstruction of two texts was implemented using 3 different pipelines, utilizing...
 
 ---
 
 ### **Question 1C**
-> *"Συγκρίνετε τα αποτελέσματα της κάθε προσέγγισης με τις κατάλληλες τεχνικές."*
+> *"Compare the results of each approach using appropriate techniques."*
 
-#### Εργαλεία που χρησιμοποιήθηκαν:
-
-> *[To be filled in]*
-
-#### Προκλήσεις:
+#### Tools used:
 
 > *[To be filled in]*
 
-#### Περιγραφή Μεθοδολογίας:
-Πραγματοποιήθηκε ποιοτική και ποσοτική σύγκριση των παραπάνω τεχνικών...
+#### Challenges:
+
+> *[To be filled in]*
+
+#### Methodology:
+Quality and quantity comparison of the above techniques was conducted...
 
 ---
 
-## Part 2
+## Part 2 - Word Embeddings Analysis
+
+> *"Use your own word embeddings (Word2Vec, GloVe, FastText, BERT embeddings, etc.) and your own custom automatic NLP pipelines (preprocessing, vocabulary, word embeddings, semantic trees etc.) to analyze the word similarity before and after the reconstruction. Calculate the cosine similarity between the original and reconstructed versions. Compare the methods with respect to A, B of deliverable 1. Visualize the word embeddings for A,B using PCA/t-SNE to demonstrate the shifts in the semantic space."*
+
+The goal of this part of the project is to evaluate the semantic similarity between original and reconstructed texts (produced by various NLP models such as Pegasus, BART, T5, and ChatGPT) using different word embedding techniques and a custom NLP pipeline. The task involves comparing the semantic shifts before and after text reconstruction using cosine similarity and visualizing these embeddings in a reduced dimensional space (PCA).
 
 ### Word Embeddings Analysis
 
-> *"Χρησιμοποιήστε ενσωματώσεις λέξεων (Word2Vec, GloVe, FastText, BERT(embeddings), κ.λπ.) και
-δικές σας -custom- αυτόματες ροές εργασίας NLP (προεπεξεργασία, λεξιλόγιο, ενσωμάτωση
-λέξεων, εννοιολογικά δέντρα κλπ) για να αναλύσετε την ομοιότητα των λέξεων πριν και μετά την
-ανακατασκευή. Υπολογίστε βαθμολογίες συνημιτόνου (cosine similarity) μεταξύ των αρχικών και
-των ανακατασκευασμένων εκδοχών. Συγκρίνετε τις μεθόδους ως προς τα A, B του παραδοτέου 1.
-Οπτικοποιήστε τις ενσωματώσεις λέξεων για τα Α,B χρησιμοποιώντας PCA/t-SNE για να
-αποδείξετε τις μετατοπίσεις στον σημασιολογικό χώρο."*
+**Word embedding** is a technique in Natural Language Processing (NLP) where words or phrases from a vocabulary are mapped to vectors of real numbers in a continuous vector space. The idea is to capture the semantic meaning of words so that similar words have similar vector representations.
 
-### Πειράματα & Αποτελέσματα - Παραδοτέο 2
+In our case we're using BERT, GloVe as well as a custom NLP pipeline to find the similarity between our original text and the reconstructed versions.
 
-For this part of the project we get the previously modified text from the models (**Pegasus**, **Bart**, **T5**) as well as a **ChatGPT** modified version of the original text (that we assume is the best version of the original text) and we do word by word comparison of them.
+### Experiments & Results
+
+For this part of the project we get the previously modified text from the models (**Pegasus**, **BART**, **T5**) as well as a **ChatGPT** modified version of the original text (that we assume is the best version of the original text) and we do word by word comparison of them using word embedding techniques.
 
 #### Libraries used:
-- **textstat** *(for a quick-look of the text readability)*
-- **sentence-transformers** *(for BERT based model)*
-- **gensim** *(for Glove)*
-- **nltk**
-- **numpy**
-- **cosine-similarity**
-- **matplotlib**
-- **PCA**
-- **pandas** *(for result table)*
+- **textstat** - for quick assessment of text readability
+- **sentence-transformers** - for BERT-based model embeddings
+- **gensim** - for GloVe embeddings
+- **nltk** - for natural language processing tasks
+- **numpy** - for numerical computations
+- **cosine-similarity** - for similarity calculations
+- **matplotlib** - for data visualization
+- **PCA** - for dimensionality reduction
+- **pandas** - for result tables
 
-In order to find the similarity and the quality of the modified text we use textstat to show us the readability and the quality of the text as well as use BERT, Glove and a custom nlp pipeline to make different embeddings (based on each model) and use consine similarity to check how similar they are to the original text.
+### Methodology
 
-#### What is cosine similarity;
+#### TextStat Analysis
+We first evaluate the textual quality and complexity using a set of readability metrics provided by the textstat library. This includes:
+- Flesch Reading Ease
+- Flesch-Kincaid Grade Level
+- Gunning Fog Index
+- SMOG Index
+- Automated Readability Index
+- Dale-Chall Score
+- Difficult Word Count
+- Lexicon Count
+- Sentence Count
+This provides a baseline for understanding how the reconstructions differ from the original text in terms of readability.
 
-> *[To be filled in]*
+#### Contextual Sentence Embeddings (BERT) (SentenceTransformer)
+We use SentenceTransformer's 'all-MiniLM-L6-v2' model to obtain sentence-level embeddings. These embeddings account for the full context of the sentence, offering a high-fidelity semantic representation.
 
-#### Πριν την πλήρη ανακατασκευή
+#### Static Word Embeddings (GloVe) (Gensim)
+We use the GloVe-Twitter-25 pretrained model from Gensim to generate word-level embeddings. Sentence embeddings are computed by averaging the vectors of tokenized and lowercased words.
+This method captures general semantic content but lacks contextual sensitivity.
 
-> *[To be filled in]*
+#### Custom NLP Pipeline
+We also designed a custom pipeline to build sentence embeddings using GloVe, emphasizing control over preprocessing and interpretability.
 
-#### Μετά την πλήρη ανακατασκευή
+**Steps:**
+1. Lowercasing and punctuation removal
+2. Tokenization (NLTK)
+3. Stopword removal
+4. Optional: POS tagging, WordNet definitions, and dependency parsing (spaCy)
+5. Mean pooling over valid word embeddings
 
-> *[To be filled in]*
+This approach is modular and suitable for interpretability and integration with lexical tools like WordNet.
+
+#### Cosine Similarity
+
+Cosine similarity measures the similarity between two non-zero vectors by calculating the cosine of the angle between them. It is widely used in machine learning and data analysis, especially in text analysis, document comparison, search queries, and recommendation systems.
+
+The formula to find the cosine similarity between two vectors is:
+
+```
+S_C(x, y) = (x · y) / (||x|| * ||y||)
+```
+
+Where:
+- `x · y` = dot product of vectors 'x' and 'y'
+- `||x||` and `||y||` = magnitude of vectors 'x' and 'y'
+- `||x|| * ||y||` = cross product of the magnitudes
+
+After generating word embeddings for each method, we apply cosine similarity and PCA for analysis.
+
+#### Dimensionality Reduction and Visualization (PCA)
+To visualize semantic shifts in embedding space, we reduce high-dimensional vectors to 2D using PCA (Principal Component Analysis).
+Each method (BERT, GloVe, Custom) is visualized separately, highlighting the spatial proximity between original and reconstructed texts.
+
+### Results
+
+#### Cosine Similarity Analysis
+At the end of the analysis, we use pandas to generate a table with all cosine similarity scores for each method across every text.
+
+Our end results looked like this:
+
+| Model   | Cosine BERT | Cosine GloVe | Cosine Custom |
+|---------|-------------|--------------|---------------|
+| Pegasus | 0.937536    | 0.997454     | 0.993679      |
+| BART    | 0.977968    | 0.999684     | 0.997300      |
+| T5      | 0.706616    | 0.997601     | 0.990438      |
+| ChatGPT | 0.965841    | 0.998354     | 0.995629      |
+
+**Observations:**
+
+- **BART** achieved the highest similarity across all models, particularly with BERT (0.9780), indicating strong semantic preservation.
+- **ChatGPT** also maintained high fidelity in all embeddings, especially within the GloVe (0.9984) and custom pipelines (0.9956).
+- **Pegasus** performed very well overall, with high similarity in GloVe (0.9975) and custom embeddings (0.9937), suggesting that its reconstructions retain core semantic content. Its slightly lower BERT score (0.9375), however, may indicate subtle contextual differences not reflected in static embeddings.
+- **T5**, despite scoring well in GloVe and custom embeddings, showed a significantly lower BERT similarity (0.7066), suggesting a semantic shift captured only by contextual models.
+- Static embeddings (GloVe and custom) tend to produce uniformly high similarity scores, while BERT introduces more variability due to context sensitivity.
+
+#### PCA Visualization Analysis
+The PCA projections of sentence embeddings across the BERT, GloVe, and custom pipelines reveal important distinctions in how models represent semantic similarity:
+
+**BERT PCA**
+BERT captures deep contextual semantics. Pegasus appears far from the original, likely due to paraphrasing or restructuring that changes context, even if meaning is preserved. BART and ChatGPT stay closer, indicating they retain both structure and meaning more faithfully.
+
+**GloVe PCA**
+In contrast, GloVe averages static word vectors, so models like Pegasus appear closer to the original if they reuse similar vocabulary—even if phrasing changes. Pegasus clusters tightly despite being distant in BERT’s space because of that.
+
+**Custom Pipeline PCA**
+This model blends token filtering (e.g. stopword removal) with GloVe vectors, making it sensitive to lexical and structural shifts. Pegasus ends up further from the original, suggesting its paraphrasing altered important token-level content.
 
 ---
 
-## Συζήτηση
+## General Discussion
 
-> **Κρίσιμες Ερωτήσεις:**
-> - Πόσο καλά αποτύπωσαν οι ενσωματώσεις λέξεων το νόημα;
-> - Ποιες ήταν οι μεγαλύτερες προκλήσεις στην ανακατασκευή;
-> - Πώς μπορεί να αυτοματοποιηθεί αυτή η διαδικασία χρησιμοποιώντας μοντέλα NLP;
-> - Υπήρξαν διαφορές στην ποιότητα ανακατασκευής μεταξύ τεχνικών, μεθόδων, βιβλιοθηκών κλπ;
-> - Συζητήστε τα ευρήματά σας.
-
----
-
-## Συμπέρασμα
-
-Αναστοχασμός επί των ευρημάτων και των προκλήσεων της μελέτης.
+**Key Questions:**
+- How well did the word embeddings capture the meaning of the original text?
+- Which were the biggest difficulties in reconstruction?
+- How can this process be automated using NLP models?
+- Were there differences in reconstruction quality between techniques, methods, libraries etc?
+- Discuss your findings.
 
 ---
 
-## Βιβλιογραφία
+## Conclusions
+
+*[Findings and difficulties to be filled in]*
+
+---
+
+## References
+
+### **Part 1**
 
 ### **Question 1A**
 - [GitHub Repository - NLP Lab UniPi](https://github.com/dimitris1pana/nlp_lab_unipi/tree/main/lab1)
@@ -201,6 +286,16 @@ In order to find the similarity and the quality of the modified text we use text
 
 ### **Question 1C**
 > *[To be filled in]*
+
+### **Part 2**
+- [Word Embeddings](https://www.ibm.com/think/topics/word-embeddings)
+- [Sentence Transformers](https://sbert.net)
+- [Gensim](https://radimrehurek.com/gensim/intro.html)
+- [NLTK](https://www.nltk.org)
+- [NumPy](https://numpy.org)
+- [spaCy](https://spacy.io)
+- [Cosine Similarity](https://www.geeksforgeeks.org/dbms/cosine-similarity/)
+- [TextStat](https://pypi.org/project/textstat/)
 
 ---
 
